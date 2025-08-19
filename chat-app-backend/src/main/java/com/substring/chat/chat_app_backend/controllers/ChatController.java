@@ -3,13 +3,15 @@ package com.substring.chat.chat_app_backend.controllers;
 import com.substring.chat.chat_app_backend.entities.Message;
 import com.substring.chat.chat_app_backend.entities.Room;
 import com.substring.chat.chat_app_backend.payload.MessageRequest;
+import com.substring.chat.chat_app_backend.repositories.MessageRepository;
 import com.substring.chat.chat_app_backend.repositories.RoomRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 
@@ -18,33 +20,41 @@ import java.time.LocalDateTime;
 public class ChatController {
 
     private RoomRepository roomRepository;
+    private final MessageRepository messageRepository;
 
-    public ChatController(RoomRepository roomRepository) {
+    public ChatController(RoomRepository roomRepository, MessageRepository messageRepository) {
         this.roomRepository = roomRepository;
+        this.messageRepository = messageRepository;
     }
 
     //msgs ko send aur receive krne ke liye apis
 
     @MessageMapping("/sendMessage/{roomId}")   //..........ispe msg ko bheja jaayega
     @SendTo("/topic/room/{roomId}")   //.......ispe client subscribe krega
+    @Transactional
 
     public Message sendMessage(
             @DestinationVariable String roomId,
-            @RequestBody MessageRequest request
+            @Payload MessageRequest request
     ) throws Exception {
         Room room = roomRepository.findByRoomId(request.getRoomId());
+
+        if (room == null) {
+            throw new RuntimeException("Room not found !!");
+        }
 
         Message message = new Message();
         message.setContent(request.getContent());
         message.setSender(request.getSender());
         message.setTimestamp(LocalDateTime.now());
+        message.setRoom(room);
 
-        if(room != null){
-            room.getMessages().add(message);
-            roomRepository.save(room);
-        }else{
-            throw new RuntimeException("Room not found !!");
-        }
+        // Save the message directly
+        messageRepository.save(message);
+
+        // Optionally keep bidirectional consistency
+        room.getMessages().add(message);
+        roomRepository.save(room);
 
         return message;
     }
