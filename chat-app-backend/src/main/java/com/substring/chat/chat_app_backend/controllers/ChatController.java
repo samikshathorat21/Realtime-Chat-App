@@ -29,8 +29,8 @@ public class ChatController {
 
     //msgs ko send aur receive krne ke liye apis
 
-    @MessageMapping("/sendMessage/{roomId}")   //..........ispe msg ko bheja jaayega
-    @SendTo("/topic/room/{roomId}")   //.......ispe client subscribe krega
+    @MessageMapping("/sendMessage/{roomId}")
+    @SendTo("/topic/room/{roomId}")
     @Transactional
 
     public Message sendMessage(
@@ -49,10 +49,10 @@ public class ChatController {
         message.setTimestamp(LocalDateTime.now());
         message.setRoom(room);
 
-        // Save the message directly
+
         messageRepository.save(message);
 
-        // Optionally keep bidirectional consistency
+
         room.getMessages().add(message);
         roomRepository.save(room);
 

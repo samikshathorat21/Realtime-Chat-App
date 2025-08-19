@@ -7,7 +7,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-@EnableWebSocketMessageBroker  //Msg ko server pe route krti hai
+@EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
@@ -15,17 +15,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
 
-        //server-side: @MessagingMappinf("/chat")
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        //jisko client actuallly subscribe krega
+
 
         registry.addEndpoint("/chat")    //.....yeh url hai connection ke liye
                 .setAllowedOrigins("http://localhost:5173")
                 .withSockJS();
     }
 
-    //ab isse chat ke endpoint pr connection establish hoga
 }

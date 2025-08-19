@@ -11,12 +11,12 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // primary key (auto increment)
+    private Long id;
 
     @Column(unique = true, nullable = false)
-    private String roomId;  // unique room identifier
+    private String roomId;
 
-    // One Room → Many Messages
+
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Message> messages = new ArrayList<>();

@@ -16,7 +16,6 @@ import java.util.List;
 @CrossOrigin("http://localhost:5173")
 public class RoomController {
 
-    //check krenge ki room available toh nhi hai pehle se
     private RoomRepository roomRepository;
     private MessageRepository messageRepository;
 
@@ -25,24 +24,23 @@ public class RoomController {
         this.messageRepository = messageRepository;
     }
 
-    //room create krna
+
     @PostMapping
     public ResponseEntity<?> createRoom(@RequestBody String roomId) {
 
         if(roomRepository.findByRoomId(roomId)!=null)
         {
-            //iska mtlb ki room already hai
+
             return ResponseEntity.badRequest().body("Room already exists !!");
         }
 
-        //agr aisa nhi toh new room create krenge
+
         Room room = new Room();
         room.setRoomId(roomId);
         Room savedRoom = roomRepository.save(room);
         return ResponseEntity.status(HttpStatus.CREATED).body(room);
     }
 
-    //ab room ko get krenge mtlb jo room ko join krne ki koshish kr rha hai
     @GetMapping("/{roomId}")
     public ResponseEntity<?> joinRoom(
             @PathVariable String roomId
@@ -56,7 +54,7 @@ public class RoomController {
         return ResponseEntity.ok(room);
     }
 
-    //saare msgs ko fetch krege
+
     @GetMapping("/{roomId}/messages")
     public ResponseEntity<List<Message>> getMessages(
             @PathVariable String roomId,
@@ -81,7 +79,7 @@ public class RoomController {
 
     }
 
-    //messages room ko send krna
+
     @PostMapping("/{roomId}/messages")
     public ResponseEntity<Message> sendMessage(
             @PathVariable String roomId,
@@ -92,7 +90,6 @@ public class RoomController {
             return ResponseEntity.badRequest().build();
         }
 
-        // set room + timestamp
         message.setRoom(room);
         message.setTimestamp(LocalDateTime.now());
 

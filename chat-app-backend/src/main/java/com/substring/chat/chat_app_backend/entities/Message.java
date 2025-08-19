@@ -10,7 +10,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // primary key
+    private Long id;
 
     private String sender;
 
@@ -19,7 +19,7 @@ public class Message {
 
     private LocalDateTime timestamp = LocalDateTime.now();
 
-    // Many Messages → One Room
+
     @ManyToOne
     @JoinColumn(name = "room_id" , nullable = false)
     @JsonBackReference
