@@ -7,4 +7,3 @@ public interface RoomRepository extends JpaRepository<Room, String> {
 
     Room findByRoomId(String roomId);
 }
-
