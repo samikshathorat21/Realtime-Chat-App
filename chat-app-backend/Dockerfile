@@ -1,5 +1,7 @@
-# Stage 1: Build the Spring Boot application using Maven
-FROM eclipse-temurin:21-jdk-focal AS builder
+# Use a Maven image that includes JDK 21
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
+
+# ... rest of your Dockerfile (COPY, RUN mvn, etc.
 
 WORKDIR /app
 
