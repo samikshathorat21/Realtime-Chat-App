@@ -29,7 +29,7 @@ A real-time chat application built with Spring Boot backend and React frontend, 
 
 ## Prerequisites
 
-- Java 17 or higher
+- Java 21 or higher
 - Node.js 16 or higher
 - Docker and Docker Compose (optional, for containerized deployment)
 - Maven (usually comes with Java)
