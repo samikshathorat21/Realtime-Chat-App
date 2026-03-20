@@ -1,5 +1,5 @@
 # Stage 1: Build the Spring Boot application using Maven
-FROM eclipse-temurin:17-jdk-focal AS builder
+FROM eclipse-temurin:21-jdk-focal AS builder
 
 WORKDIR /app
 
