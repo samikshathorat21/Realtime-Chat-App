@@ -1,15 +1,12 @@
-# Use a Maven image that includes JDK 21
+# Stage 1: Build
 FROM maven:3.9.6-eclipse-temurin-21 AS builder
-
-# ... rest of your Dockerfile (COPY, RUN mvn, etc.
 
 WORKDIR /app
 
 # Copy pom.xml and download dependencies (better caching)
 COPY pom.xml .
 
-RUN apt-get update && apt-get install -y maven
-
+# No need to apt-get install maven; it's already in this image!
 RUN mvn dependency:go-offline
 
 # Copy source code
@@ -18,8 +15,8 @@ COPY src ./src
 # Build jar
 RUN mvn clean package -DskipTests
 
-# Stage 2: Runtime image
-FROM eclipse-temurin:17-jre-focal
+# Stage 2: Runtime image (Must match or exceed builder version)
+FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
