@@ -13,12 +13,11 @@ A real-time chat application built with Spring Boot backend and React frontend, 
 ## Tech Stack
 
 ### Backend
-- Java 17
+- Java 21
 - Spring Boot
 - Spring WebSocket
 - Spring Data JPA
-- H2 Database (for development)
-- Maven
+- MySql
 
 ### Frontend
 - React 18
@@ -29,7 +28,7 @@ A real-time chat application built with Spring Boot backend and React frontend, 
 
 ## Prerequisites
 
-- Java 17 or higher
+- Java 21 or higher
 - Node.js 16 or higher
 - Docker and Docker Compose (optional, for containerized deployment)
 - Maven (usually comes with Java)
