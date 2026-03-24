@@ -21,7 +21,7 @@ import com.substring.chat.chat_app_backend.repositories.RoomRepository;
 
 @RestController
 @RequestMapping("/api/v1/rooms")
-@CrossOrigin(origins = "${app.cors.allowed-origins:http://localhost:5173}")
+@CrossOrigin(origins = {"http://localhost:5173", "https://realtime-chat-app-henna.vercel.app"})
 public class RoomController {
 
     private RoomRepository roomRepository;
