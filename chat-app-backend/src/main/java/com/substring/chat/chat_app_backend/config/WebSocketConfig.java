@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 
         registry.addEndpoint("/chat")    //.....yeh url hai connection ke liye
-                .setAllowedOrigins("http://localhost:5173", "https://realtime-chat-app-henna.vercel.app")
+                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 
