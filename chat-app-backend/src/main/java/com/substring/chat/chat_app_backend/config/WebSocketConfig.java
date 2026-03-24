@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 
         registry.addEndpoint("/chat")    //.....yeh url hai connection ke liye
-                .setAllowedOrigins("http://localhost:5173")
+                .setAllowedOrigins(System.getenv("FRONTEND_URL") != null ? System.getenv("FRONTEND_URL") : "http://localhost:5173")
                 .withSockJS();
     }
 
